@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Priyanshu | Portfolio</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Animation Library (AOS) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* ------------------- 
+           VARIABLES & RESET 
+        ---------------------- */
+        :root {
+            --bg-color: #050505;
+            --card-bg: #121212;
+            --primary: #005596; /* Royal Blue */
+            --primary-dark: #003366;
+            --accent: #00a8ff;
+            --text-main: #ffffff;
+            --text-muted: #b0b0b0;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none; /* Hide default cursor */
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ------------------- 
+           CUSTOM CURSOR 
+        ---------------------- */
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent);
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--primary);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+
+        /* ------------------- 
+           LAYOUT & TYPOGRAPHY 
+        ---------------------- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        a { text-decoration: none; color: inherit; cursor: none; }
+        ul { list-style: none; }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 2.5rem;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+            background: linear-gradient(90deg, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* ------------------- 
+           COMPONENTS (BUTTONS) 
+        ---------------------- */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 0; height: 100%;
+            background: var(--primary);
+            z-index: -1;
+            transition: width 0.3s ease;
+        }
+
+        .btn:hover::before { width: 100%; }
+        .btn:hover { color: #fff; box-shadow: 0 0 20px rgba(0, 85, 150, 0.5); }
+
+        .btn-filled {
+            background: var(--primary);
+            color: #fff;
+        }
+        .btn-filled:hover { background: var(--primary-dark); border-color: var(--primary-dark); }
+
+        /* ------------------- 
+           HEADER 
+        ---------------------- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--primary);
+        }
+
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* ------------------- 
+           HERO & ANIMATED NAME
+        ---------------------- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 85, 150, 0.15) 0%, transparent 60%);
+            padding-top: 80px;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+            margin-bottom: 15px;
+            line-height: 1.1;
+        }
+
+        /* COOL NAME ANIMATION */
+        .animated-name {
+            background: linear-gradient(
+                to right, 
+                var(--primary) 20%, 
+                #fff 40%, 
+                #fff 60%, 
+                var(--primary) 80%
+            );
+            background-size: 200% auto;
+            color: #000;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+            font-weight: 800;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .typewriter {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-weight: 300;
+            min-height: 1.6em;
+        }
+
+        .hero-socials {
+            margin-top: 40px;
+            font-size: 1.5rem;
+        }
+        .hero-socials a {
+            margin: 0 15px;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        .hero-socials a:hover {
+            color: var(--primary);
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        /* ------------------- 
+           EXPERIENCE & EDUCATION (SEPARATE)
+        ---------------------- */
+        .timeline-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline-card {
+            background: var(--glass);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            margin-bottom: 25px;
+            transition: transform 0.3s, border-color 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 4px;
+            background: var(--glass-border);
+            transition: background 0.3s;
+        }
+
+        .timeline-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .timeline-card:hover::before {
+            background: var(--primary);
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .role { font-size: 1.25rem; font-weight: 700; color: #fff; }
+        .date { color: var(--primary); font-weight: 600; font-size: 0.9rem; }
+        .company { font-style: italic; color: var(--text-muted); display: block; margin-bottom: 15px; }
+
+        .timeline-card ul { padding-left: 20px; color: #ddd; list-style-type: disc; }
+        .timeline-card li { margin-bottom: 5px; }
+
+        /* ------------------- 
+           PROJECTS GRID 
+        ---------------------- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: #0f0f0f;
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .p-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .p-title { font-size: 1.2rem; font-weight: 700; }
+        .p-date { font-size: 0.8rem; color: var(--text-muted); }
+        
+        .p-desc {
+            font-size: 0.95rem;
+            color: #ccc;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .p-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tech-pill {
+            font-size: 0.75rem;
+            background: rgba(0, 85, 150, 0.15);
+            color: var(--accent);
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        .p-link {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: gap 0.3s;
+        }
+        .p-link:hover { gap: 10px; color: #fff; }
+
+        .view-all-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        /* ------------------- 
+           SKILLS & OTHERS 
+        ---------------------- */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .skill-box {
+            background: var(--glass);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .skill-box h3 { color: var(--primary); margin-bottom: 15px; font-size: 1.1rem; }
+
+        .tag-cloud { display: flex; flex-wrap: wrap; gap: 10px; }
+        .tag {
+            background: #1a1a1a;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid #333;
+            transition: 0.3s;
+        }
+        .tag:hover { border-color: var(--primary); color: var(--primary); background: rgba(0, 85, 150, 0.1); }
+
+        .cert-list li {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #222;
+            padding-bottom: 8px;
+        }
+        .cert-link { 
+            color: var(--accent); 
+            font-size: 0.8rem; 
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .cert-link:hover { color: #fff; text-decoration: underline; }
+
+        /* ------------------- 
+           FOOTER 
+        ---------------------- */
+        footer {
+            background: #000;
+            padding: 60px 0 30px;
+            text-align: center;
+            border-top: 1px solid #222;
+        }
+        
+        .footer-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .contact-info i { color: var(--primary); margin-right: 5px; }
+
+        .designer-tag {
+            margin-top: 30px;
+            font-size: 0.85rem;
+            color: #666;
+            border-top: 1px solid #111;
+            padding-top: 20px;
+            display: inline-block;
+            width: 100%;
+        }
+
+        /* ------------------- 
+           RESPONSIVE 
+        ---------------------- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .nav-links { display: none; }
+            .section-title { font-size: 2rem; }
+            .projects-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Magnetic Cursor -->
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
+
+    <!-- Navigation -->
+    <header>
+        <div class="container nav-flex">
+            <div class="logo">PRIYANSHU</div>
+            <ul class="nav-links">
+                <li><a href="#profile" class="hover-trigger">Profile</a></li>
+                <li><a href="#experience" class="hover-trigger">Experience</a></li>
+                <li><a href="#education" class="hover-trigger">Education</a></li>
+                <li><a href="#projects" class="hover-trigger">Projects</a></li>
+                <li><a href="#skills" class="hover-trigger">Skills</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1 data-aos="zoom-in">Hi, I'm <span class="animated-name">Priyanshu</span></h1>
+            <div class="typewriter" id="typewriter"></div>
+            
+            <div data-aos="fade-up" data-aos-delay="200">
+                <!-- Resume Download Button -->
+                <a href="Resume.pdf" download="Priyanshu_Resume" class="btn btn-filled hover-trigger">
+                    <i class="fas fa-download"></i> Download Resume
+                </a>
+                <a href="mailto:showlittlemercy@gmail.com" class="btn hover-trigger">
+                    <i class="fas fa-envelope"></i> Contact Me
+                </a>
+            </div>
+
+            <div class="hero-socials" data-aos="fade-up" data-aos-delay="400">
+                <a href="https://github.com/showlittlemercy" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://pandascience.net" target="_blank" title="Website"><i class="fas fa-globe"></i></a>
+                <a href="https://www.instagram.com/showlittlemercy/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Profile Summary -->
+    <section id="profile" class="container">
+        <h2 class="section-title" data-aos="fade-right">Profile Summary</h2>
+        <div class="timeline-card" data-aos="fade-up">
+            <p style="font-size: 1.1rem; line-height: 1.8;">
+                I am a creative digital creator with expertise in <strong style="color:var(--primary)">Web Development</strong>, <strong style="color:var(--primary)">Music Production</strong>, <strong style="color:var(--primary)">Video Editing</strong>, and <strong style="color:var(--primary)">3D Environments</strong>. Skilled in HTML, CSS, JavaScript, Python and familiar with C++. I build responsive websites, produce immersive audio/video content & design real-time 3D scenes.
+            </p>
+        </div>
+    </section>
+
+    <!-- Experience Section (Separated) -->
+    <section id="experience" class="container">
+        <h2 class="section-title" data-aos="fade-right">Working Experience</h2>
+        
+        <div class="timeline-container">
+            
+            <!-- Machine Learning Intern -->
+            <div class="timeline-card" data-aos="fade-left">
+                <div class="timeline-header">
+                    <span class="role">Machine Learning Intern</span>
+                    <span class="date">Dec 2025 -- Present</span>
+                </div>
+                <span class="company">Corizo Edutech Pvt. Ltd | Bangalore</span>
+                <ul>
+                    <li>Focused on designing, training, and optimizing advanced machine learning models to solve complex predictive problems.</li>
+                    <li>Utilized <strong>Python</strong>, <strong>Scikit-Learn</strong>, and <strong>TensorFlow</strong> to implement algorithms for classification, regression, and clustering tasks to enhance model accuracy.</li>
+                    <li><strong>Certificate:</strong> Upcoming</li>
+                </ul>
+            </div>
+
+            <!-- Exp 1 -->
+            <div class="timeline-card" data-aos="fade-left" data-aos-delay="100">
+                <div class="timeline-header">
+                    <span class="role">Data Science Intern</span>
+                    <span class="date">Nov 2025 -- Present</span>
+                </div>
+                <span class="company">Corizo Edutech Pvt. Ltd | Bangalore</span>
+                <ul>
+                    <li>Engaged in a specialized Data Science internship focusing on the entire data lifecycle.</li>
+                    <li>Applied Python, SQL, and Machine Learning techniques to extract actionable insights.</li>
+                    <li>Status: Ongoing</li>
+                </ul>
+            </div>
+
+            <!-- Exp 2 (With Certificate Link) -->
+            <div class="timeline-card" data-aos="fade-left" data-aos-delay="200">
+                <div class="timeline-header">
+                    <span class="role">Web Development Intern</span>
+                    <span class="date">Oct 2025 -- Nov 2025</span>
+                </div>
+                <span class="company">Corizo Edutech Pvt. Ltd | Bangalore</span>
+                <ul>
+                    <li>Gained hands-on experience with modern tools working on real-world projects.</li>
+                    <li>Collaborated with mentors to build scalable web solutions.</li>
+                    <li style="margin-top: 10px;"><strong>Certificate:</strong> <a href="https://credentials.corizo.in/credential/0a4996cf-4d54-4a64-ba6f-1bbd2d4aa586?view=recipient" target="_blank" style="color:var(--accent); text-decoration: underline;">View Credential <i class="fas fa-external-link-alt" style="font-size: 0.8em;"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section (Separated) -->
+    <section id="education" class="container" style="padding-top: 20px;">
+        <h2 class="section-title" data-aos="fade-right">Education</h2>
+        
+        <div class="timeline-container">
+            <div class="timeline-card" data-aos="fade-up">
+                <div class="timeline-header">
+                    <span class="role">Bachelor of Engineering (Computer Science)</span>
+                    <span class="date">2022 -- Present</span>
+                </div>
+                <span class="company">HKBK College of Engineering | CGPA: 8.0</span>
+                <ul>
+                    <li>Coursework includes algorithms, programming, data structures, and emerging technologies.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS SECTION (All 14 Included + Link Restored) -->
+    <section id="projects" class="container">
+        <h2 class="section-title" data-aos="fade-right">Selected Projects</h2>
+        
+        <div class="projects-grid">
+
+            <!-- 1. CRUD -->
+            <div class="project-card hover-trigger" data-aos="zoom-in">
+                <div class="card-content">
+                    <div class="p-header">
+                        <span class="p-title">CRUD Application</span>
+                        <span class="p-date">Oct 2025</span>
+                    </div>
+                    <p class="p-desc">Fully functional User Data Manager to efficiently manage records.</p>
+                    <div class="p-tech">
+                        <span class="tech-pill">JavaScript</span>
+                        <span class="tech-pill">Frontend</span>
+                    </div>
+                    <a href="https://showlittlemercy.github.io/CRUD-APPLICATION/" target="_blank" class="p-link">View Project <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+
+            <!-- 2. TERRA NOVA -->
+            <div class="project-card hover-trigger" data-aos="zoom-in">
+                <div class="card-content">
+                    <div class="p-header">
+                        <span class="p-title">TERRA NOVA (3D)</span>
+                        <span class="p-date">Oct 2025</span>
+                    </div>
+                    <p class="p-desc">Cinematic 3D animation. Designed complete world/characters in UE5.</p>
+                    <div class="p-tech">
+                        <span class="tech-pill">Unreal Engine 5.5</span>
+                        <span class="tech-pill">After Effects</span>
+                    </div>
+                    <a href="https://www.youtube.com/watch?v=Zy0Rg_FdJvk" target="_blank" class="p-link">Watch Video <i class="fas fa-play-circle"></i></a>
+                </div>
+            </div>
+
+            <!-- 3. 11:11 -->
+            <div class="project-card hover-trigger" data-aos="zoom-in">
+                <div class="card-content">
+                    <div class="p-header">
+                        <span class="p-title">11:11 Motion Graphics</span>
+                        <span class="p-date">Oct 2025</span>
+                    </div>
+                    <p class="p-desc">Rhythmic visual experience synchronized with music & kinetic typography.</p>
+                    <div class="p-tech">
+                        <span class="tech-pill">After Effects</span>
+                        <span class="tech-pill">Motion Graphics</span>
+                    </div>
+                    <a href="https://www.youtube.com/shorts/3JMpdRe2w0Q" target="_blank" class="p-link">Watch Video <i class="fas fa-play-circle"></i></a>
+                </div>
+            </div>
+
+            <!-- 4. GOLDEN BROWN -->
+            <div class="project-card hover-trigger" data-aos="zoom-in">
+                <div class="card-content">
+                    <div class="p-header">
+                        <span class="p-title">GOLDEN BROWN</span>
+                        <span class="p-date">Oct 2025</span>
+                    </div>
+                    <p class="p-desc">Photorealistic 3D environment. Mastered lighting, texture, and composition.</p>
+                    <div class="p-tech">
+                        <span class="tech-pill">Unreal Engine 5.5</span>
+                        <span class="tech-pill">Visuals</span>
+                    </div>
+                    <a href="https://www.youtube.com/shorts/BxjG6kn4jPs" target="_blank" class="p-link">Watch Video <i class="fas fa-video"></i></a>
+                </div>
+            </div>
+
+            <!-- 5. INFECTED -->
+            <div class="project-card hover-trigger" data-aos="zoom-in">
+                <div class="card-content">
+                    <div class="p-header">
+                        <span class="p-title">INFECTED</span>
+                        <span class="p-date">Oct 2025</span>
+                    </div>
+                    <p class="p-desc">3D Environment design featuring realistic cars, roads, and foliage.</p>
+                    <div class="p-tech">
+                        <span class="tech-pill">Unreal Engine 5.5</span>
+                        <span class="tech-pill">Premiere Pro</span>
+                    </div>
+                    <a href="https://www.youtube.com/shorts/HHMZjGj-Khg" target="_blank" class="p-link">Watch Video <i class="fas fa-video"></i></a>
+                </div>
+            </div>
+
+            <!-- 6. TERI MERI -->
+            <div class="project-card hover-trigger" data-aos="zoom-in">
+                <div class="card-content">
+                    <div class="p-header">
+                        <span class="p-title">TERI MERI Edit</span>
+                        <span class="p-date">Sep 2025</span>
+                    </div>
+                    <p class="p-desc">Emotional anime edit with precise timing and visual storytelling.</p>
+                    <div class="p-tech">
+                        <span class="tech-pill">After Effects</span>
+                        <span class="tech-pill">Premiere Pro</span>
+                    </div>
+                    <a href="https://www.youtube.com/watch?v=JozHC3aMTH8" target="_blank" class="p-link">Watch Video <i class="fas fa-video"></i></a>
+                </div>
+            </div>
+
+            <!-- 7. Tic Tac Toe -->
+            <div class="project-card hover-trigger" data-aos="zoom-in">
+                <div class="card-content">
+                    <div class="p-header">
+                        <span class="p-title">Tic-Tac-Toe</span>
+                        <span class="p-date">Aug 2025</span>
+                    </div>
+                    <p class="p-desc">Classic game designed for quick play with an AI or two players.</p>
+                    <div class="p-tech">
+                        <span class="tech-pill">JavaScript</span>
+                        <span class="tech-pill">Game Logic</span>
+                    </div>
+                    <a href="https://showlittlemercy.github.io/TIC-TAC-TOE/" target="_blank" class="p-link">Play Game <i class="fas fa-gamepad"></i></a>
+                </div>
+            </div>
+
+            <!-- 8. CATVET -->
+            <div class="project-card hover-trigger" data-aos="zoom-in">
+                <div class="card-content">
+                    <div class="p-header">
+                        <span class="p-title">CATVET</span>
+                        <span class="p-date">July 2025</span>
+                    </div>
+                    <p class="p-desc">Informative article detailing comprehensive guidelines on feline health.</p>
+                    <div class="p-tech">
+                        <span class="tech-pill">HTML</span>
+                        <span class="tech-pill">Content</span>
+                    </div>
+                    <a href="https://showlittlemercy.github.io/CATVET/" target="_blank" class="p-link">Visit Site <i class="fas fa-paw"></i></a>
+                </div>
+            </div>
+
+            <!-- 9. Rock Paper Scissors -->
+            <div class="project-card hover-trigger" data-aos="zoom-in">
+                <div class="card-content">
+                    <div class="p-header">
+                        <span class="p-title">RPS with AI</span>
+                        <span class="p-date">June 2025</span>
+                    </div>
+                    <p class="p-desc">Interactive game allowing users to play against an AI.</p>
+                    <div class="p-tech">
+                        <span class="tech-pill">CSS</span>
+                        <span class="tech-pill">JavaScript</span>
+                    </div>
+                    <a href="https://showlittlemercy.github.io/ROCK-PAPER-SCISSORS/" target="_blank" class="p-link">Play Game <i class="fas fa-hand-scissors"></i></a>
+                </div>
+            </div>
+
+            <!-- 10. Scientific Calculator -->
+            <div class="project-card hover-trigger" data-aos="zoom-in">
+                <div class="card-content">
+                    <div class="p-header">
+                        <span class="p-title">Sci. Calculator</span>
+                        <span class="p-date">May 2025</span>
+                    </div>
+                    <p class="p-desc">Robust interface to handle complex scientific arithmetic.</p>
+                    <div class="p-tech">
+                        <span class="tech-pill">JavaScript</span>
+                        <span class="tech-pill">UI Design</span>
+                    </div>
+                    <a href="https://showlittlemercy.github.io/SCIENTIFIC-CALCULATOR/" target="_blank" class="p-link">Use Tool <i class="fas fa-calculator"></i></a>
+                </div>
+            </div>
+
+            <!-- 11. Vegan Diet -->
+            <div class="project-card hover-trigger" data-aos="zoom-in">
+                <div class="card-content">
+                    <div class="p-header">
+                        <span class="p-title">Vegan Diet Plan</span>
+                        <span class="p-date">Apr 2025</span>
+                    </div>
+                    <p class="p-desc">Guide providing a weekly timetable and nutrition fundamentals.</p>
+                    <div class="p-tech">
+                        <span class="tech-pill">HTML</span>
+                        <span class="tech-pill">Health</span>
+                    </div>
+                    <a href="https://showlittlemercy.github.io/GOOD-VEGAN-DIET-PLAN/" target="_blank" class="p-link">Read More <i class="fas fa-leaf"></i></a>
+                </div>
+            </div>
+
+            <!-- 12. Coin Flip -->
+            <div class="project-card hover-trigger" data-aos="zoom-in">
+                <div class="card-content">
+                    <div class="p-header">
+                        <span class="p-title">Coin Flip AI</span>
+                        <span class="p-date">Mar 2025</span>
+                    </div>
+                    <p class="p-desc">Coin flipping game competing against an embedded AI.</p>
+                    <div class="p-tech">
+                        <span class="tech-pill">Algorithms</span>
+                        <span class="tech-pill">JS</span>
+                    </div>
+                    <a href="https://showlittlemercy.github.io/COIN-FLIP-AI/" target="_blank" class="p-link">Play Now <i class="fas fa-coins"></i></a>
+                </div>
+            </div>
+
+            <!-- 13. Image to PDF -->
+            <div class="project-card hover-trigger" data-aos="zoom-in">
+                <div class="card-content">
+                    <div class="p-header">
+                        <span class="p-title">Img to PDF</span>
+                        <span class="p-date">Feb 2025</span>
+                    </div>
+                    <p class="p-desc">Web tool allowing users to select images and generate a consolidated PDF.</p>
+                    <div class="p-tech">
+                        <span class="tech-pill">Utility</span>
+                        <span class="tech-pill">HTML</span>
+                    </div>
+                    <a href="https://showlittlemercy.github.io/IMAGE-TO-PDF/" target="_blank" class="p-link">Use Tool <i class="fas fa-file-pdf"></i></a>
+                </div>
+            </div>
+
+            <!-- 14. Bouncing Ball -->
+            <div class="project-card hover-trigger" data-aos="zoom-in">
+                <div class="card-content">
+                    <div class="p-header">
+                        <span class="p-title">3D Bouncing Ball</span>
+                        <span class="p-date">Jan 2025</span>
+                    </div>
+                    <p class="p-desc">Simple 3D game focused on engaging interaction and score tracking.</p>
+                    <div class="p-tech">
+                        <span class="tech-pill">3D Physics</span>
+                        <span class="tech-pill">JS</span>
+                    </div>
+                    <a href="https://showlittlemercy.github.io/3D-BOUNCING-BALL-GAME/" target="_blank" class="p-link">Play Game <i class="fas fa-basketball-ball"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RESTORED: View All Projects Button -->
+        <div class="view-all-container" data-aos="fade-up">
+            <a href="https://github.com/showlittlemercy?tab=repositories" target="_blank" class="btn btn-filled hover-trigger">
+                <i class="fab fa-github"></i> View All Projects on GitHub
+            </a>
+        </div>
+    </section>
+
+    <!-- Skills, Certs, Publications -->
+    <section id="skills" class="container">
+        <h2 class="section-title" data-aos="fade-right">Technical Skills</h2>
+        
+        <div class="skills-container">
+            <!-- Languages -->
+            <div class="skill-box" data-aos="flip-up">
+                <h3>Languages</h3>
+                <div class="tag-cloud">
+                    <span class="tag">Python</span>
+                    <span class="tag">JavaScript</span>
+                    <span class="tag">C++</span>
+                    <span class="tag">SQL</span>
+                    <span class="tag">HTML/CSS</span>
+                    <span class="tag">LaTeX</span>
+                </div>
+            </div>
+
+            <!-- Tools & Frameworks -->
+            <div class="skill-box" data-aos="flip-up" data-aos-delay="100">
+                <h3>Tools & Frameworks</h3>
+                <div class="tag-cloud">
+                    <span class="tag">React</span>
+                    <span class="tag">Node.js</span>
+                    <span class="tag">Pandas</span>
+                    <span class="tag">Scikit-Learn</span>
+                    <span class="tag">Git/GitHub</span>
+                    <span class="tag">Jupyter</span>
+                </div>
+            </div>
+
+            <!-- Creative -->
+            <div class="skill-box" data-aos="flip-up" data-aos-delay="200">
+                <h3>Creative Tech</h3>
+                <div class="tag-cloud">
+                    <span class="tag">Unreal Engine 5</span>
+                    <span class="tag">FL Studio</span>
+                    <span class="tag">Premiere Pro</span>
+                    <span class="tag">After Effects</span>
+                    <span class="tag">Blender</span>
+                    <span class="tag">Figma</span>
+                </div>
+            </div>
+            
+            <!-- Soft Skills -->
+            <div class="skill-box" data-aos="flip-up" data-aos-delay="300">
+                <h3>Soft Skills</h3>
+                <div class="tag-cloud">
+                    <span class="tag">Leadership</span>
+                    <span class="tag">Teamwork</span>
+                    <span class="tag">Negotiation</span>
+                    <span class="tag">Problem-Solving</span>
+                    <span class="tag">Creativity</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Certifications & Pubs split -->
+        <div style="margin-top: 50px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+            
+            <!-- Certifications (Updated with Links) -->
+            <div class="skill-box" data-aos="fade-right">
+                <h3><i class="fas fa-certificate"></i> Certifications</h3>
+                <ul class="cert-list">
+                    <li>UI-UX Basics <a href="https://simpli.app.link/qoB1IVF3GXb" target="_blank" class="cert-link">View</a></li>
+                    <li>Data Analyst 101 <a href="https://simpli.app.link/ejJvdORfHXb" target="_blank" class="cert-link">View</a></li>
+                    <li>Excel Dashboard <a href="https://simpli.app.link/Euso7wE1wXb" target="_blank" class="cert-link">View</a></li>
+                    <li>Generative AI Studio <a href="https://simpli.app.link/TJ9VtSD2mXb" target="_blank" class="cert-link">View</a></li>
+                    <li>Intro to Data Analytics <a href="https://simpli.app.link/Kq9DQQkFlXb" target="_blank" class="cert-link">View</a></li>
+                    <li>Intro to HTML <a href="https://simpli.app.link/DVJa808vlXb" target="_blank" class="cert-link">View</a></li>
+                    <li>Machine Learning (Python) <a href="https://simpli.app.link/QiD9z8dsWWb" target="_blank" class="cert-link">View</a></li>
+                </ul>
+            </div>
+
+            <!-- Publications & Interests -->
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <div class="skill-box" data-aos="fade-left">
+                    <h3><i class="fas fa-book"></i> Publication (2025)</h3>
+                    <p style="font-weight: 600; color: #fff;">Cloud-Based Social Media Platforms: Architectures, Challenges & Future Trends</p>
+                    <p style="font-size: 0.85rem; color: #888;">International Journal of Innovative Science & Research Technology</p>
+                </div>
+
+                <div class="skill-box" data-aos="fade-left">
+                    <h3><i class="fas fa-heart"></i> Interests</h3>
+                    <div class="tag-cloud">
+                        <span class="tag">Technical Research</span>
+                        <span class="tag">Music Production</span>
+                        <span class="tag">Fitness</span>
+                        <span class="tag">Space & Astronomy</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <span class="footer-name">PRIYANSHU</span>
+            
+            <div class="contact-info">
+                <span><i class="fas fa-map-marker-alt"></i> Bangalore - 560047</span>
+                <span><i class="fas fa-phone"></i> +91 9071048836</span>
+                <span><i class="fas fa-envelope"></i> showlittlemercy@gmail.com</span>
+            </div>
+
+            <div class="hero-socials" style="margin-top: 0; font-size: 1.2rem;">
+                <a href="https://github.com/showlittlemercy" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://pandascience.net" target="_blank"><i class="fas fa-globe"></i></a>
+                <a href="https://www.instagram.com/showlittlemercy/" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+
+            <div class="designer-tag">
+                &copy; 2025 All Rights Reserved. <br>
+                <strong>Designed & Developed by Priyanshu</strong>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // 1. Initialize Animation on Scroll
+        AOS.init({
+            duration: 900,
+            once: true,
+            offset: 80
+        });
+
+        // 2. Magnetic Cursor
+        const cursorDot = document.querySelector('[data-cursor-dot]');
+        const cursorOutline = document.querySelector('[data-cursor-outline]');
+        const triggers = document.querySelectorAll('.hover-trigger, a, button, .project-card');
+
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        triggers.forEach(trigger => {
+            trigger.addEventListener('mouseenter', () => {
+                cursorOutline.style.width = '60px';
+                cursorOutline.style.height = '60px';
+                cursorOutline.style.backgroundColor = 'rgba(0, 85, 150, 0.1)';
+            });
+            trigger.addEventListener('mouseleave', () => {
+                cursorOutline.style.width = '40px';
+                cursorOutline.style.height = '40px';
+                cursorOutline.style.backgroundColor = 'transparent';
+            });
+        });
+
+        // 3. Typewriter Effect
+        const textElement = document.getElementById('typewriter');
+        const roles = [
+            "Creative Digital Creator", 
+            "Web Developer", 
+            "Data Enthusiast", 
+            "Music Producer", 
+            "3D Artist"
+        ];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function type() {
+            const currentRole = roles[roleIndex];
+            
+            if (isDeleting) {
+                textElement.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                textElement.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 40 : 90;
+
+            if (!isDeleting && charIndex === currentRole.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % roles.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+
+        document.addEventListener('DOMContentLoaded', type);
+    </script>
+</body>
+</html>
